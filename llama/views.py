@@ -68,7 +68,12 @@ def coment(request):
         lista_i.append(aux)
         count += 5
 
-    return (HttpResponse(lista_i))
+        
+    dicc = {
+        "Resultado" : documentos
+    }
+
+    return HttpResponse(json.dumps(dicc), content_type="application/json")
 
 
 
@@ -147,16 +152,24 @@ def comply(request):
             output_amostra.append('D')
 
     cont_aux = 0
+    cont_fim = 0
     lista_i = []
     for i in documentos:
         i['comply'] = output_amostra[cont_aux]
         cont_aux = cont_aux + 1
         aux = json.dumps(i)
-        aux = aux+','
+        if cont_fim != len(documentos) - 1:
+            aux = aux+','
         lista_i.append(aux)
-    
+        cont_fim += 1
 
-    return (HttpResponse(lista_i))
+        dicc = {
+            "Resultado" : documentos
+        }
+
+
+
+    return HttpResponse(json.dumps(dicc), content_type="application/json")
 
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
